@@ -32,27 +32,27 @@ void EraserTool::drawLine(QPoint start, QPoint end) {
   painter.drawLine(start, end);
 };
 
-void RectangleTool::start(QPoint position) {
+void ShapeTool::start(QPoint position) {
   startPoint = position;
   isDrawing = true;
   originalImage = QImage(image);
 };
-void RectangleTool::update(QPoint position) {
+void ShapeTool::update(QPoint position) {
   endpoint = position;
   image = QImage(originalImage);
 
-  drawRectangle(startPoint, endpoint);
+  drawShape(startPoint, endpoint);
 };
 
-void RectangleTool::end(QPoint position) {
+void ShapeTool::end(QPoint position) {
   endpoint = position;
   isDrawing = false;
   image = QImage(originalImage);
 
-  drawRectangle(startPoint, endpoint);
+  drawShape(startPoint, endpoint);
 };
 
-void RectangleTool::drawRectangle(QPoint start, QPoint end) {
+void RectangleTool::drawShape(QPoint start, QPoint end) {
   QPainter painter(&image);
   QColor color = QColor(this->color.red(), this->color.green(),
                         this->color.blue(), this->opacity);
@@ -62,9 +62,31 @@ void RectangleTool::drawRectangle(QPoint start, QPoint end) {
   painter.drawRect(QRect(start, end));
 };
 
+void EllipseTool::drawShape(QPoint start, QPoint end) {
+  QPainter painter(&image);
+  QColor color = QColor(this->color.red(), this->color.green(),
+                        this->color.blue(), this->opacity);
+  painter.setPen(
+      QPen(color, brushSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+
+  painter.drawEllipse(QRect(start, end));
+};
+
+void LineTool::drawShape(QPoint start, QPoint end) {
+  QPainter painter(&image);
+  QColor color = QColor(this->color.red(), this->color.green(),
+                        this->color.blue(), this->opacity);
+  painter.setPen(
+      QPen(color, brushSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+
+  painter.drawLine(start, end);
+};
+
 ToolManager::ToolManager(Canvas *canvas) : canvas(canvas) {
   tools.insert("Pencil", new PencilTool(canvas->toolImage));
+  tools.insert("Line", new LineTool(canvas->toolImage));
   tools.insert("Rectangle", new RectangleTool(canvas->toolImage));
+  tools.insert("Ellipse", new EllipseTool(canvas->toolImage));
   tools.insert("Eraser", new EraserTool(canvas->toolImage));
 };
 

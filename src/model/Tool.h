@@ -55,20 +55,37 @@ public:
   void drawLine(QPoint start, QPoint end) override;
 };
 
-class RectangleTool : public Tool {
+class ShapeTool : public Tool {
 public:
-  RectangleTool(QImage &image) : Tool(image){};
+  ShapeTool(QImage &image) : Tool(image){};
   void start(QPoint position) override;
   void update(QPoint position) override;
   void end(QPoint position) override;
+  virtual void drawShape(QPoint start, QPoint end) = 0;
 
 private:
   QPoint startPoint;
   QPoint endpoint;
   bool isDrawing = false;
   QImage originalImage;
+};
 
-  void drawRectangle(QPoint start, QPoint end);
+class RectangleTool : public ShapeTool {
+public:
+  RectangleTool(QImage &image) : ShapeTool(image){};
+  void drawShape(QPoint start, QPoint end) override;
+};
+
+class EllipseTool : public ShapeTool {
+public:
+  EllipseTool(QImage &image) : ShapeTool(image){};
+  void drawShape(QPoint start, QPoint end) override;
+};
+
+class LineTool : public ShapeTool {
+public:
+  LineTool(QImage &image) : ShapeTool(image){};
+  void drawShape(QPoint start, QPoint end) override;
 };
 
 class ToolManager {
