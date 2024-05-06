@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "qapplication": "cpp",
+        "qwidget": "cpp",
+        "format": "cpp",
+        "qhash": "cpp",
+        "qgraphicsitem": "cpp",
+        "random": "cpp",
+        "*.tcc": "cpp",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "span": "cpp",
+        "qjsondocument": "cpp",
+        "qbuffer": "cpp",
+        "qmouseevent": "cpp",
+        "new": "cpp",
+        "qmainwindow": "cpp"
+    }
+}
